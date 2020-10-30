@@ -1,0 +1,24 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+int solution(vector<int> citations) {
+    int answer = 0, count = 0;
+
+    for(int i = 1; i <= citations.size(); i++){
+        count = 0;
+        for(int j = 0; j < citations.size(); j++){
+            if(citations[j] >= i){
+                count++;
+            }
+        }
+        if(min(count, i) > answer){
+            answer = min(count, i);
+        }
+    }
+
+    return answer;
+}
