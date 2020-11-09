@@ -1,0 +1,37 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int getParent(int parent[], int x){
+    if(parent[x] == x) return x;
+    return getParent(parent, parent[x]);
+}
+
+void unionParent(int parent[], int a, int b){
+    a = getParent(parent, a);
+    b = getParent(parent, b);
+    if (a < b) parent[b] = a;
+    else parent[a] = b;
+}
+
+int solution(int n, vector<vector<int>> computers) {
+    int answer = 0, parent[201];
+
+    for(int i = 0; i < computers.size(); i++){
+        parent[i + 1] = i + 1;
+        for(int j = 0; j < i; j++){
+            if(computers[i][j] == 1){
+                unionParent(parent, i + 1, j + 1);
+            }
+        }
+    }
+
+    for(int i = 0; i < computers.size(); i++){
+        if(parent[i + 1] == i + 1){
+            answer++;
+        }
+    }
+
+    return answer;
+}
